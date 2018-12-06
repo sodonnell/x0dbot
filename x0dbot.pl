@@ -38,9 +38,9 @@ use pQuery;
 # Custom HTTP User Agent string
 my $agent = "x0db0t/1.0";
 
-# bitly API auth config
-my $bitly_api_login = "v3xt0r";
-my $bitly_api_key = "R_1a7486aec0962fb765007e18331cb5e7";
+# bitly API auth config deprecated
+my $bitly_api_login = "??";
+my $bitly_api_key = "??";
 
 # flickr API auth config
 my $auth_key = '';
@@ -80,12 +80,12 @@ switch($ARGV[0])
 {
 	case /^e/ {
 		# efnet
-		$nickname = 'b0tkowski';
+		$nickname = 'x0db0t';
 		$ircname = $agent;
 		#$server = 'irc.he.net';
 		$server = 'irc.mzima.net';
-		$master = '[desYpfa]';
-		@channels = ('#... redshift','#audiocafe','#windows');
+		$master = 'x0d';
+		@channels = ('#...','#audiocafe','#windows');
 	}
         case /^f/ {
 		# freenode
