@@ -80,12 +80,12 @@ switch($ARGV[0])
 {
 	case /^e/ {
 		# efnet
-		$nickname = 'x0db0t';
+		$nickname = 'b0tkowski';
 		$ircname = $agent;
 		#$server = 'irc.he.net';
 		$server = 'irc.mzima.net';
-		$master = 'x0d';
-		@channels = ('#...','#audiocafe','#windows');
+		$master = '[desYpfa]';
+		@channels = ('#... redshift','#audiocafe','#windows');
 	}
         case /^f/ {
 		# freenode
@@ -426,6 +426,20 @@ sub master_filter
                     my $fortune = `fortune`;
                     $irc->yield( privmsg => $channel => "$fortune" );
                 }
+        if ($what =~ /^!urban/)
+        {
+            $what =~ s/!urban //g;
+            my $urbanlookup = "https://www.urbandictionary.com/define.php?term=". $what;
+            my $dom = pQuery->get($urbanlookup)->content;
+            my $return = pQuery->get($urbanlookup)->title;
+            my $x=0;
+            pQuery('div.meaning', $dom)->each(sub {
+                my $i = shift;
+                ($x < 1) ? $return .= ": ". pQuery($_)->text() : last;
+                $x++;
+            });
+            $irc->yield( privmsg => $channel => "$return" );
+        }
 	return;
 }
 
