@@ -2,20 +2,8 @@
 #
 # x0dbot.pl
 #
-# Sean's Experimental Freenode IRC-Op Bot written in Perl.
+# Author: Sean O'Donnell <sean@seanodonnell.com>
 #
-# This IRC bot is intended simply as an exercise in coding 
-# IRC commands via the Perl/CPAN POE::Component::IRC module.
-#
-# I've also incorporated a few of my own scripts that I had 
-# originally written for the Irssi Client, which I still use 
-# as an actual IRC Client (rather than as an IRC bot), but 
-# prefer to have a dedicated (background) 'bot' process running 
-# it's own process for such functionality.
-#
-# $Id: x0dbot.pl,v 1.2 2012/03/21 10:27:29 seanodonnell Exp $
-#
-#######
 
 use strict;
 use warnings;
@@ -29,41 +17,26 @@ use DBI;
 use Regexp::Common qw/URI/;
 use pQuery;
 
-#######
-#
-# start editing variables;
-#
-#######
-
-# Custom HTTP User Agent string
-my $agent = "x0db0t/1.0";
-
-# bitly API auth config deprecated
-my $bitly_api_login = "??";
-my $bitly_api_key = "??";
-
-# flickr API auth config
-my $auth_key = '';
-my $auth_secret = '';
-my $auth_token = '';
-
 my $nickname;
 my $ircname;
 my $server;
 my $master;
 my @channels;
 
-# quotebot db
-our $fquotes = "quotes.txt";
+# Custom HTTP User Agent string
+my $agent = "x0dbot/1.0";
 
-#f00dbot db
-our $ff00d = "f00d.txt";
-
-#our $quote;
 our $line;
 
-# fuckingi... dad jokes. yup.
+# !quote/!addquote trigger db
+our $fquotes = "quotes.txt";
+
+# !f00d trigger db
+our $ff00d = "f00d.txt";
+
+# !dadjoke trigger db
 our $fdadjokes = "dadjokes.txt";
+
 #
 # irc config (editing required)
 #
@@ -79,56 +52,29 @@ our $fdadjokes = "dadjokes.txt";
 switch($ARGV[0])
 {
 	case /^e/ {
-		# efnet
-		$nickname = 'b0tkowski';
-		$ircname = $agent;
-		#$server = 'irc.he.net';
-		$server = 'irc.mzima.net';
-		$master = '[desYpfa]';
-		@channels = ('#... redshift','#audiocafe','#windows');
+		include 'config.efnet.pl';
 	}
-        case /^f/ {
-		# freenode
-                $nickname = 'x0db0t';
-                $ircname = $agent;
-                $server = 'irc.freenode.net';
-                $master = 'x0d';
-                @channels = ('#sgvlug','#lalugs');
-        }
+	case /^f/ {
+		include 'config.freenode.pl';
+	}
 	else {
 		print "Usage: $0 [e|efnet|f|freenode]\n";
-		exit;
+		include 'config.pl';
 	}
 }
 
-# database config
+# database config DEPRECATED
 my $db_user = 'x0dbot';
 my $db_pass = 'x0db0t';
 my $db_host = 'localhost';
 my $db_name = 'x0dbot';
 my $db_dsn = 'DBI:mysql:'. $db_name .':'.$db_host;
-
-#######
-#
-# stop editing variables;
-# start procedures (main())
-#
-#######
-#our $db_conn = db_conn();
 our $db_conn;
 
 my $md5 = Digest::MD5->new;
 
 my $lwp = LWP::UserAgent->new;
 $lwp->agent($agent);
-
-#my $parser = XML::RSS::Parser->new;
-
-#if ($auth_key)
-#{
-#	my $flickr = Flickr::Upload->new({ 'key' => $auth_key, 'secret' => $auth_secret});
-#	$flickr->agent($agent);
-#}
 
 my $eliza = Chatbot::Eliza->new;
 
@@ -367,79 +313,80 @@ sub master_filter
 			$irc->yield( privmsg => $channel => "$say" );
 		}
 	}
+
 	# all user accessible triggers
-		if ($what =~ /http/)
-		{
-			my ($uri) = $what =~ /$RE{URI}{-keep}/;
+	if ($what =~ /http/)
+	{
+		my ($uri) = $what =~ /$RE{URI}{-keep}/;
 
-			if ($uri)
-			{
-	    			$irc->yield( privmsg => $channel =>  pQuery->get($uri)->title );
-			}
-
-		}
-        	if ($what =~ /^!addquote/)
-        	{
-		   $what =~ s/!addquote //g;
-		   $who =~ s/\!.*//g;
-        	   add_quote($what);
-         	   $irc->yield( privmsg => $channel => "Quote added. Thank you, $who." );
-       	 	}
-        	if ($what =~ /^!quote/)
-        	{
-        	    my $quote = read_quote();
-        	    $irc->yield( privmsg => $channel => "$quote" );
-        	}
-                if ($what =~ /^!eat/)
-                {    
-                   $what =~ s/!eat //g;
-                   $who =~ s/\!.*//g;
-                   add_food($what);
-                   $irc->yield( privmsg => $channel => "Food added. Thank you, $who." );
-                }
-                if ($what =~ /^!f00d/)
-                {   
-                    my $quote = read_food();
-                    $irc->yield( privmsg => $channel => "$quote" );
-                }
-                if ($what =~ /^!dadjoke/)
-                {  
-                    my $quote = read_dadjoke();
-                    $irc->yield( privmsg => $channel => "$quote" );
-                }
-                if ($what =~ /$nickname/)
-                {
-                    # AI testing with Eliza
-                    $what =~ s/$nickname//;
-                    my $reply = $eliza->transform($what);
-                    $irc->yield( privmsg => $channel => "$nick: $reply" );
-                }
-		if ($what =~ /^!m00say/)
+		if ($uri)
 		{
-                    my $say = $what;
-                    $say =~ s/^!m00say //;
-		    my $cowsay = `cowsay $say`;
-		    $irc->yield( privmsg => $channel => "$cowsay" );
+				$irc->yield( privmsg => $channel =>  pQuery->get($uri)->title );
 		}
-                if ($what =~ /^!fortune/)
-                {
-                    my $fortune = `fortune`;
-                    $irc->yield( privmsg => $channel => "$fortune" );
-                }
-        if ($what =~ /^!urban/)
-        {
-            $what =~ s/!urban //g;
-            my $urbanlookup = "https://www.urbandictionary.com/define.php?term=". $what;
-            my $dom = pQuery->get($urbanlookup)->content;
-            my $return = pQuery->get($urbanlookup)->title;
-            my $x=0;
-            pQuery('div.meaning', $dom)->each(sub {
-                my $i = shift;
-                ($x < 1) ? $return .= ": ". pQuery($_)->text() : last;
-                $x++;
-            });
-            $irc->yield( privmsg => $channel => "$return" );
-        }
+
+	}
+	if ($what =~ /^!addquote/)
+	{
+	   $what =~ s/!addquote //g;
+	   $who =~ s/\!.*//g;
+	   add_quote($what);
+	   $irc->yield( privmsg => $channel => "Quote added. Thank you, $who." );
+	}
+	if ($what =~ /^!quote/)
+	{
+		my $quote = read_quote();
+		$irc->yield( privmsg => $channel => "$quote" );
+	}
+	if ($what =~ /^!eat/)
+	{
+	   $what =~ s/!eat //g;
+	   $who =~ s/\!.*//g;
+	   add_food($what);
+	   $irc->yield( privmsg => $channel => "Food added. Thank you, $who." );
+	}
+	if ($what =~ /^!f00d/)
+	{
+		my $quote = read_food();
+		$irc->yield( privmsg => $channel => "$quote" );
+	}
+	if ($what =~ /^!dadjoke/)
+	{
+		my $quote = read_dadjoke();
+		$irc->yield( privmsg => $channel => "$quote" );
+	}
+	if ($what =~ /$nickname/)
+	{
+		# AI testing with Eliza
+		$what =~ s/$nickname//;
+		my $reply = $eliza->transform($what);
+		$irc->yield( privmsg => $channel => "$nick: $reply" );
+	}
+	if ($what =~ /^!m00say/)
+	{
+				my $say = $what;
+				$say =~ s/^!m00say //;
+		my $cowsay = `cowsay $say`;
+		$irc->yield( privmsg => $channel => "$cowsay" );
+	}
+	if ($what =~ /^!fortune/)
+	{
+		my $fortune = `fortune`;
+		$irc->yield( privmsg => $channel => "$fortune" );
+	}
+	if ($what =~ /^!urban/)
+	{
+		$what =~ s/!urban //g;
+		my $urbanlookup = "https://www.urbandictionary.com/define.php?term=". $what;
+		my $dom = pQuery->get($urbanlookup)->content;
+		my $return = pQuery->get($urbanlookup)->title;
+		my $x=0;
+		pQuery('div.meaning', $dom)->each(sub {
+			my $i = shift;
+			($x < 1) ? $return .= ": ". pQuery($_)->text() : last;
+			$x++;
+		});
+		$irc->yield( privmsg => $channel => "$return" );
+	}
 	return;
 }
 
