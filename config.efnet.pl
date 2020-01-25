@@ -16,5 +16,5 @@ $server = 'irc.he.net';
 @channels = (
 #    '#privchan-example secretpass',
     '#linux',
-    '#windows'
+    '#perl'
 );

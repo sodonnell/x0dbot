@@ -10,11 +10,11 @@ $master = 'mynickname';
 $ircname = "x0dbot/1.0";
 
 # Efnet network example
-$server = 'irc.he.net';
+$server = 'irc.freenode.net';
 
 # channels to auto-join
 @channels = (
 #    '#privchan-example secretpass',
     '#linux',
-    '#windows'
+    '#perl'
 );
