@@ -20,7 +20,6 @@ services:
 #  - riak
 
 install: 
-  - cpanm --quiet --notest --skip-satisfied Acme::Include
   - cpanm --quiet --notest --skip-satisfied Number::Format
   - cpanm --quiet --notest --skip-satisfied XML::RSS::Parser
   - cpanm --quiet --notest --skip-satisfied POE::Component::IRC
