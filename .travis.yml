@@ -17,6 +17,7 @@ install:
   - cpanm --quiet --notest --skip-satisfied Regexp::Common
   - cpanm --quiet --notest --skip-satisfied Switch
   - cpanm --quiet --notest --skip-satisfied XML::RSS::Parser
+  - sudo apt install fortune
 
 script:
   - perl x0dbot.pl --efnet &
