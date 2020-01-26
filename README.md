@@ -8,9 +8,9 @@ This is an old project that I started back in 2004. I've revised some of the fun
 
 ## Features
 
-### Eliza Chatbot Integration
+### Chatbot::Eliza Integration
 
-This bot will respond when messaged in a channel by reading scripts from the Eliza Chatbot perl module. 
+This bot will respond when messaged in a channel by reading scripts from the [Chatbot::Eliza](https://metacpan.org/pod/Chatbot::Eliza) perl module.
 
 ### Channel !Triggers
 
