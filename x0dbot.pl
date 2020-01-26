@@ -51,14 +51,14 @@ our $fdadjokes = "dadjokes.txt";
 #
 switch($ARGV[0])
 {
-	case /^e/ {
+	case /^-e|^--efnet/ {
 		include 'config.efnet.pl';
 	}
-	case /^f/ {
+	case /^-f|^--freenode/ {
 		include 'config.freenode.pl';
 	}
 	else {
-		print "Usage: $0 [e|efnet|f|freenode]\n";
+		print "Usage: $0 [-e|--efnet|-f|--freenode]\n";
 		include 'config.pl';
 	}
 }

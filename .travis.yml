@@ -1,0 +1,29 @@
+#
+# x0dbit travis-ci config
+#
+language: perl
+perl: 
+  - "5.28"
+os: linux
+
+services:
+#  - cassandra
+#  - couchdb
+  - elasticsearch
+  - memcached
+#  - mongodb
+#  - mariadb
+#  - mysql
+#  - postgresql
+#  - rabbitmq
+#  - redis
+#  - riak
+
+#install: pip3 install -r requirements.txt
+
+before_script:
+  - apt install cpanminus
+
+script:
+  - bash install.sh
+  - perl x0dbot.pl -e
