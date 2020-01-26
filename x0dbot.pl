@@ -241,13 +241,13 @@ sub master_filter
 			print "Joining: $whereto\n";
 			$irc->yield( join => "$whereto" );
 		}
-                elsif ($what =~ /^!part/)
-                {
-                        my $whereto = $what;
-                        $whereto =~ s/^!part //;
-                        print "Parting $whereto\n";
-                        $irc->yield( part => "$whereto" => msg => "$whereto Peace out!" );
-                }
+		elsif ($what =~ /^!part/)
+		{
+				my $whereto = $what;
+				$whereto =~ s/^!part //;
+				print "Parting $whereto\n";
+				$irc->yield( part => "$whereto" => msg => "$whereto Peace out!" );
+		}
 		elsif ($what =~ /^!kick/)
 		{
 			my $who = $what;
