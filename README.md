@@ -26,12 +26,19 @@ This bot will respond when messaged in a channel by reading scripts from the [Ch
 
 #### Private Master Triggers
 
+##### System Triggers
+
 * !uptime - display system uptime.
+* !md5 file - print the md5sum of a file on the system. (use wisely)
+
+##### IRC Control Triggers
+
 * !quit - instruct the bot quit IRC.
 * !join #channel - instruct the bot to join a channel.
 * !part #channel - instruct the bot to leave a channel.
-* !md5 file - print the md5sum of a file on the system. (use wisely)
-* Bot-Op Triggers:
-** !kick user - kick a user from a channel.
-** !op user - op a user in a channel.
-** !deop user - deop a user in a channel.
+
+##### Channel Operator Triggers
+
+* !kick user - kick a user from a channel.
+* !op user - op a user in a channel.
+* !deop user - deop a user in a channel.
