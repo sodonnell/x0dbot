@@ -18,6 +18,7 @@ use Chatbot::Eliza; # a wee-bit of AI experiment and trickery ;p
 use DBI;
 use Regexp::Common qw/URI/;
 use pQuery;
+use feature qw(include);
 
 my $nickname;
 my $ircname;
@@ -267,6 +268,10 @@ sub master_filter
 		
 		if ($what =~ /^!bitly/)
 		{
+			# DEPRECATED - saved for simple API calls via LWP example.
+			my $bitly_api_login;
+			my $bitly_api_key;
+
 			my $url = $what;
 
 			$url =~ s/^!bitly //;
