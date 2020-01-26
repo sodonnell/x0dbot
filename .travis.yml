@@ -19,7 +19,7 @@ services:
 #  - redis
 #  - riak
 
-#install: pip3 install -r requirements.txt
+install: sudo apt install cpanminus
 
 #before_script:
 #  - sudo apt install cpanminus
