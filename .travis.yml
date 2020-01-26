@@ -19,7 +19,7 @@ services:
 #  - redis
 #  - riak
 
-install: sudo apt install cpanminus
+#install: sudo apt install cpanminus
 
 #before_script:
 #  - sudo apt install cpanminus
