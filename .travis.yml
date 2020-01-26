@@ -22,7 +22,7 @@ services:
 #install: pip3 install -r requirements.txt
 
 before_script:
-  - apt install cpanminus
+  - sudo apt install cpanminus
 
 script:
   - bash install.sh
