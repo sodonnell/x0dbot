@@ -16,4 +16,7 @@ cpanm install Number::Format \
     Chatbot::Eliza \
     LWP::UserAgent \
     Regexp::Common \
-    Digest::MD5
+    Digest::MD5 \
+    Switch \
+    pQuery \
+    DBI

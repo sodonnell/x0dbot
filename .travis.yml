@@ -27,6 +27,9 @@ install:
   - cpanm --quiet --notest --skip-satisfied LWP::UserAgent
   - cpanm --quiet --notest --skip-satisfied Regexp::Common
   - cpanm --quiet --notest --skip-satisfied Digest::MD5
+  - cpanm --quiet --notest --skip-satisfied pQuery
+  - cpanm --quiet --notest --skip-satisfied DBI
+  - cpanm --quiet --notest --skip-satisfied Switch
 
 #before_script:
 #  - sudo apt install cpanminus

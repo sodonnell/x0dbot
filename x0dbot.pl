@@ -7,6 +7,8 @@
 
 use strict;
 use warnings;
+
+# cpan modules
 use Switch;
 use Number::Format;
 use POE qw(Component::IRC);
