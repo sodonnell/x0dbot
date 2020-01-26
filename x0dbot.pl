@@ -18,7 +18,6 @@ use Chatbot::Eliza; # a wee-bit of AI experiment and trickery ;p
 use DBI;
 use Regexp::Common qw/URI/;
 use pQuery;
-use Acme::Include;
 
 my $nickname;
 my $ircname;
@@ -55,14 +54,46 @@ our $fdadjokes = "dadjokes.txt";
 switch($ARGV[0])
 {
 	case /^-e|^--efnet/ {
-		include 'config.efnet.pl';
+		# bot username/nick
+		$nickname = 'x0dbot-dev';
+
+		# owner/master nick
+		$master = 'mynickname';
+
+		# bot hidden name
+		$ircname = "x0dbot/1.0";
+
+		# Efnet network example
+		$server = 'irc.he.net';
+
+		# channels to auto-join
+		@channels = (
+			#'#privchan-example secretpass',
+			'#x0dbot'
+		);
 	}
 	case /^-f|^--freenode/ {
-		include 'config.freenode.pl';
+		# bot username/nick
+		$nickname = 'x0dbot-dev';
+
+		# owner/master nick
+		$master = 'mynickname';
+
+		# bot hidden name
+		$ircname = "x0dbot/1.0";
+
+		# Efnet network example
+		$server = 'irc.freenode.net';
+
+		# channels to auto-join
+		@channels = (
+			#'#privchan-example secretpass',
+			'#x0dbot'
+		);
 	}
 	else {
 		print "Usage: $0 [-e|--efnet|-f|--freenode]\n";
-		include 'config.pl';
+		exit;
 	}
 }
 
