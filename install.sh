@@ -11,6 +11,7 @@
 #sudo apt install cpanminus
 #sudo yum install cpanminus
 cpanm install Number::Format \
+    Acme::Include \
     XML::RSS::Parser \
     POE::Component::IRC \
     Chatbot::Eliza \

@@ -18,7 +18,7 @@ use Chatbot::Eliza; # a wee-bit of AI experiment and trickery ;p
 use DBI;
 use Regexp::Common qw/URI/;
 use pQuery;
-use feature qw(include);
+use Acme::Include;
 
 my $nickname;
 my $ircname;
