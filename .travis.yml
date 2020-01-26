@@ -19,4 +19,4 @@ install:
   - cpanm --quiet --notest --skip-satisfied XML::RSS::Parser
 
 script:
-  - perl x0dbot.pl --efnet 2>&1 >> x0dbot.log
+  - perl x0dbot.pl --efnet &
