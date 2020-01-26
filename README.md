@@ -6,6 +6,8 @@ A simple IRC Bot written in Perl.
 
 This is an old project that I started back in 2004. I've revised some of the functionality and released it to the github/open source community.
 
+There are far better IRC bots out there to choose from, so I suggest you try one of those, instead. I highly suggest the [sopel IRC Bot Framework written in Python](https://github.com/sodonnell/sopel).
+
 ## Features
 
 ### Chatbot::Eliza Integration

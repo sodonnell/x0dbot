@@ -7,7 +7,6 @@ perl:
 os: linux
 
 install: 
-#  - sudo apt install fortune cowsay
   - cpanm --quiet --notest --skip-satisfied Chatbot::Eliza
   - cpanm --quiet --notest --skip-satisfied DBI
   - cpanm --quiet --notest --skip-satisfied Digest::MD5
