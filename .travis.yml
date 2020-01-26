@@ -7,6 +7,7 @@ perl:
 os: linux
 
 install: 
+#  - sudo apt install fortune cowsay
   - cpanm --quiet --notest --skip-satisfied Chatbot::Eliza
   - cpanm --quiet --notest --skip-satisfied DBI
   - cpanm --quiet --notest --skip-satisfied Digest::MD5
@@ -17,7 +18,6 @@ install:
   - cpanm --quiet --notest --skip-satisfied Regexp::Common
   - cpanm --quiet --notest --skip-satisfied Switch
   - cpanm --quiet --notest --skip-satisfied XML::RSS::Parser
-  - sudo apt install fortune
 
 script:
   - perl x0dbot.pl --efnet &
